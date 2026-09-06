@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { adminAuth } from "../utils/firebase/fireBaseAdmin";
 
 const loginSchema = z.object({
   email: z
@@ -68,34 +69,34 @@ export async function loginAction(
     };
   }
 
+  const validatedData = result.data;
+
   if (isSignup) {
-    // TODO:
-    // Create user in your database.
-    //
-    // Example:
-    // await db.user.create({
-    //   data: {
-    //     name: data.name,
-    //     email: data.email,
-    //     password: hashedPassword,
-    //   },
-    // });
+    try {
+      const user = await adminAuth.createUser({
+        email: validatedData.email,
+        password: validatedData.password,
+        displayName:
+          "name" in validatedData && typeof validatedData.name === "string"
+            ? validatedData.name
+            : undefined,
+      });
 
-    return {
-      success: true,
-      message: "Account created successfully.",
-    };
+      console.log(user);
+
+      return {
+        success: true,
+        message: "Account created successfully.",
+      };
+    } catch (error) {
+      console.error("Firebase signup error:", error);
+
+      return {
+        success: false,
+        message: "Unable to create account.",
+      };
+    }
   }
-
-  // TODO:
-  // Find the user in your database.
-  // Verify the password.
-  // Create a session/cookie.
-  //
-  // Example:
-  // const user = await db.user.findUnique({
-  //   where: { email: data.email },
-  // });
 
   return {
     success: true,
