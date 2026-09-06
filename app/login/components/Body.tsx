@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Login from "./Login";
 
 const Body = () => {
   return (
@@ -15,6 +16,10 @@ const Body = () => {
         }
       />
       <div className="absolute inset-0 bg-black/45" />
+
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
+        <Login />
+      </div>
     </div>
   );
 };
