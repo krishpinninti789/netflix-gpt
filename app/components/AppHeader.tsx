@@ -1,0 +1,63 @@
+import Image from "next/image";
+import { logoutAction } from "../actions/auth.action";
+import { getCurrentUser } from "../actions/user.action";
+
+const AppHeader = async () => {
+  const user = await getCurrentUser();
+
+  const displayName = user?.displayName || "User";
+  const email = user?.email || "";
+
+  const initials = displayName
+    .split(" ")
+    .map((name) => name[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-white/10">
+      <div className="flex h-20 max-w-7xl items-center justify-between lg:px-10">
+        {/* Logo */}
+        <div className="flex items-center">
+          <Image
+            width={100}
+            height={100}
+            alt="NetflixGPT"
+            className="h-12 w-auto object-contain"
+            src="https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAWiPHORowsUPy4Ef8HnCO9JXGoNeHRyWtWY4xZAfUtau5iCnG2Ko_-8QuKVa8P6wtpfnyGopi4LoAha-VghVRE_N6kRqhwpLQCpga5tzrlTEHRGHgzpa9PYmEEEgQyuEdhsyq9vmhmPR.svg"
+          />
+        </div>
+
+        {/* User section */}
+        {user && (
+          <div className="flex items-center gap-4">
+            {/* User information */}
+            <div className="hidden text-right sm:block">
+              <p className="text-sm font-semibold text-white">{displayName}</p>
+
+              <p className="max-w-55 truncate text-xs text-gray-400">{email}</p>
+            </div>
+
+            {/* Avatar */}
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-red-500 to-red-700 text-sm font-bold text-white shadow-lg shadow-red-950/30">
+              {initials}
+            </div>
+
+            {/* Logout */}
+            <form action={logoutAction}>
+              <button
+                type="submit"
+                className="rounded-lg border cursor-pointer border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default AppHeader;

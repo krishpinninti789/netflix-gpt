@@ -1,8 +1,8 @@
 "use client";
-
-import { AuthState, loginAction } from "@/app/actions/auth.action";
-import Link from "next/link";
 import React, { useActionState, useState } from "react";
+import Link from "next/link";
+import { loginAction } from "@/app/actions/auth.action";
+import { AuthState } from "@/app/utils/types/auth.types";
 
 const initialState: AuthState = {
   success: false,

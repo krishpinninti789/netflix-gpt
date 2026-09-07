@@ -1,47 +1,10 @@
 "use server";
 
-import { z } from "zod";
 import { adminAuth } from "../utils/firebase/fireBaseAdmin";
 import { cookies } from "next/headers";
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
-
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(6, "Password must be at least 6 characters"),
-});
-
-const signupSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Full name is required")
-    .min(2, "Name must be at least 2 characters"),
-
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
-
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(6, "Password must be at least 6 characters"),
-});
-
-export type AuthState = {
-  success: boolean;
-  message: string;
-  errors?: {
-    name?: string[];
-    email?: string[];
-    password?: string[];
-  };
-};
+import { redirect } from "next/navigation";
+import { loginSchema, signupSchema } from "../utils/authSchemas/auth.schema";
+import { AuthState } from "../utils/types/auth.types";
 
 export async function loginAction(
   previousState: AuthState,
@@ -88,8 +51,6 @@ export async function loginAction(
         message: "Account created successfully.",
       };
     } catch (error) {
-      console.error("Firebase signup error:", error);
-
       return {
         success: false,
         message: "Unable to create account.",
@@ -120,26 +81,18 @@ export async function loginAction(
       path: "/",
       maxAge: 60 * 60 * 24 * 5,
     });
-
-    console.log("Login successful:", loginResult.localId);
-
-    return {
-      success: true,
-      message: "Login successful.",
-    };
   } catch (error) {
-    console.error("Login error:", error);
-
     return {
       success: false,
       message: "Invalid email or password.",
     };
   }
+  redirect("/browse");
 }
 
 async function signInWithFirebase(email: string, password: string) {
   const response = await fetch(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_WEB_API_KEY}`,
+    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.NEXT_PUBLIC_FIREBASE_API_KEY}`,
     {
       method: "POST",
       headers: {
@@ -160,4 +113,11 @@ async function signInWithFirebase(email: string, password: string) {
   }
 
   return data;
+}
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("session");
+  redirect("/login");
 }
