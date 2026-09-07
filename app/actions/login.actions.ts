@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { adminAuth } from "../utils/firebase/fireBaseAdmin";
+import { cookies } from "next/headers";
 
 const loginSchema = z.object({
   email: z
@@ -82,8 +83,6 @@ export async function loginAction(
             : undefined,
       });
 
-      console.log(user);
-
       return {
         success: true,
         message: "Account created successfully.",
@@ -98,8 +97,67 @@ export async function loginAction(
     }
   }
 
-  return {
-    success: true,
-    message: "Login successful.",
-  };
+  try {
+    const loginResult = await signInWithFirebase(
+      validatedData.email,
+      validatedData.password,
+    );
+
+    const sessionCookie = await adminAuth.createSessionCookie(
+      loginResult.idToken,
+      {
+        expiresIn: 1000 * 60 * 60 * 24 * 5,
+      },
+    );
+
+    // 3. Store session in HTTP-only cookie
+    const cookieStore = await cookies();
+
+    cookieStore.set("session", sessionCookie, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 5,
+    });
+
+    console.log("Login successful:", loginResult.localId);
+
+    return {
+      success: true,
+      message: "Login successful.",
+    };
+  } catch (error) {
+    console.error("Login error:", error);
+
+    return {
+      success: false,
+      message: "Invalid email or password.",
+    };
+  }
+}
+
+async function signInWithFirebase(email: string, password: string) {
+  const response = await fetch(
+    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_WEB_API_KEY}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        returnSecureToken: true,
+      }),
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error?.message || "Invalid credentials");
+  }
+
+  return data;
 }
