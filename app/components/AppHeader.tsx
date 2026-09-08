@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { logoutAction } from "../actions/auth.action";
 import { getCurrentUser } from "../actions/user.action";
+import { NETFLIX_LOGO_URL } from "@/utils/constants";
 
 const AppHeader = async () => {
   const user = await getCurrentUser();
@@ -25,7 +26,7 @@ const AppHeader = async () => {
             height={100}
             alt="NetflixGPT"
             className="h-12 w-auto object-contain"
-            src="https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAWiPHORowsUPy4Ef8HnCO9JXGoNeHRyWtWY4xZAfUtau5iCnG2Ko_-8QuKVa8P6wtpfnyGopi4LoAha-VghVRE_N6kRqhwpLQCpga5tzrlTEHRGHgzpa9PYmEEEgQyuEdhsyq9vmhmPR.svg"
+            src={NETFLIX_LOGO_URL}
           />
         </div>
 

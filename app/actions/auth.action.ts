@@ -1,10 +1,10 @@
 "use server";
 
-import { adminAuth } from "../utils/firebase/fireBaseAdmin";
+import { adminAuth } from "../../utils/firebase/fireBaseAdmin";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { loginSchema, signupSchema } from "../utils/authSchemas/auth.schema";
-import { AuthState } from "../utils/types/auth.types";
+import { loginSchema, signupSchema } from "../../utils/authSchemas/auth.schema";
+import { AuthState } from "../../utils/types/auth.types";
 
 export async function loginAction(
   previousState: AuthState,

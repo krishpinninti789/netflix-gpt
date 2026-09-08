@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { adminAuth } from "../utils/firebase/fireBaseAdmin";
+import { adminAuth } from "../../utils/firebase/fireBaseAdmin";
 
 export async function getCurrentUser() {
   const cookieStore = await cookies();
