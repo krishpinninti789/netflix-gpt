@@ -27,6 +27,7 @@ const AppHeader = async () => {
             alt="NetflixGPT"
             className="h-12 w-auto object-contain"
             src={NETFLIX_LOGO_URL}
+            loading="eager"
           />
         </div>
 

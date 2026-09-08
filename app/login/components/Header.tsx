@@ -10,6 +10,7 @@ const Header = () => {
         alt="app-logo"
         className="h-16 w-36"
         src={NETFLIX_LOGO_URL}
+        loading="eager"
       />
     </div>
   );
