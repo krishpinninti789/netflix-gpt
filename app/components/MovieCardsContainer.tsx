@@ -21,7 +21,7 @@ const MovieCardsContainer = ({ data }: MovieCardsContainerProps) => {
 
   return (
     <div>
-      {movies.map((movie) => (
+      {movies?.map((movie) => (
         <h1 key={movie.id}>{movie.title}</h1>
       ))}
     </div>
