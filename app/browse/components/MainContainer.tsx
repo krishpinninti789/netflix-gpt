@@ -6,10 +6,16 @@ import useMovieTrailer from "@/app/hooks/useMovieTrailer";
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackGround";
 
+type Movie = {
+  id: number;
+  title: string;
+  overview: string;
+};
+
 const MainContainer = () => {
   const { movies, loading: moviesLoading } = useNowPlayingMovies();
 
-  const movie = movies?.[0];
+  const movie = movies?.[0] as Movie | undefined;
 
   const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
 
