@@ -1,31 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addNowPlayingMovies, type Movie } from "@/utils/redux/moviesSlice";
-import type { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { useEffect, useState } from "react";
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 
-type MovieCardsContainerProps = {
-  data: Movie[];
-};
+export default function MovieList() {
+  const { movies, loading } = useNowPlayingMovies();
 
-const MovieCardsContainer = ({ data }: MovieCardsContainerProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const movies = useSelector(
-    (state: RootState) => state.movies?.nowPlayingMovies,
-  );
-
-  useEffect(() => {
-    dispatch(addNowPlayingMovies(data));
-  }, [data, dispatch]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      {movies?.map((movie) => (
-        <h1 key={movie.id}>{movie.title}</h1>
+      {movies?.map((movie: any) => (
+        <div key={movie?.id}>{movie?.title}</div>
       ))}
     </div>
   );
-};
-
-export default MovieCardsContainer;
+}

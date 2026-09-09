@@ -46,10 +46,35 @@ export async function loginAction(
             : undefined,
       });
 
-      return {
-        success: true,
-        message: "Account created successfully.",
-      };
+      try {
+        const loginResult = await signInWithFirebase(
+          validatedData.email,
+          validatedData.password,
+        );
+
+        const sessionCookie = await adminAuth.createSessionCookie(
+          loginResult.idToken,
+          {
+            expiresIn: 1000 * 60 * 60 * 24 * 5,
+          },
+        );
+
+        // 3. Store session in HTTP-only cookie
+        const cookieStore = await cookies();
+
+        cookieStore.set("session", sessionCookie, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          path: "/",
+          maxAge: 60 * 60 * 24 * 5,
+        });
+      } catch (error) {
+        return {
+          success: false,
+          message: "Invalid email or password.",
+        };
+      }
     } catch (error) {
       return {
         success: false,
