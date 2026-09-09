@@ -1,7 +1,7 @@
 "use client";
 
+import useNowPlayingMovies from "@/app/hooks/useNowPlayingMovies";
 import { useEffect, useState } from "react";
-import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 
 export default function MovieList() {
   const { movies, loading } = useNowPlayingMovies();
@@ -10,11 +10,5 @@ export default function MovieList() {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div>
-      {movies?.map((movie: any) => (
-        <div key={movie?.id}>{movie?.title}</div>
-      ))}
-    </div>
-  );
+  return <div></div>;
 }

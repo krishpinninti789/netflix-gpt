@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { logoutAction } from "../actions/auth.action";
-import { getCurrentUser } from "../actions/user.action";
+
 import { NETFLIX_LOGO_URL } from "@/utils/constants";
+import { logoutAction } from "@/app/actions/auth.action";
+import { getCurrentUser } from "@/app/actions/user.action";
 
 const AppHeader = async () => {
   const user = await getCurrentUser();

@@ -1,12 +1,13 @@
 import React from "react";
-import AppHeader from "../components/AppHeader";
-import MovieCardsContainer from "../components/MovieCardsContainer";
+import AppHeader from "./components/AppHeader";
+import MovieList from "./components/MovieCardsContainer";
+import MainContainer from "./components/MainContainer";
 
 const page = () => {
   return (
     <div className="py-6 px-10">
       <AppHeader />
-      <MovieCardsContainer />
+      <MainContainer />
     </div>
   );
 };
