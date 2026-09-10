@@ -15,14 +15,13 @@ type Movie = {
 };
 
 const MainContainer = () => {
-  const movies = useSelector(
-    (store: RootState) => store.movies.nowPlayingMovies,
-  );
-  const { loading: moviesLoading } = useNowPlayingMovies();
+  const { nowPlayingMovies, trailer, trailerLoading, moviesLoading } =
+    useSelector((store: RootState) => store.movies);
+  useNowPlayingMovies();
 
-  const movie = movies?.[0] as Movie | undefined;
+  const movie = nowPlayingMovies?.[0] as Movie | undefined;
 
-  const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
+  useMovieTrailer(movie?.id);
 
   if (moviesLoading || !movie) {
     return (
@@ -34,9 +33,7 @@ const MainContainer = () => {
 
   return (
     <main className="relative h-[80vh] overflow-hidden">
-      {trailerKey && !trailerLoading && (
-        <VideoBackground videoKey={trailerKey} />
-      )}
+      {trailer && !trailerLoading && <VideoBackground videoKey={trailer} />}
 
       <VideoTitle title={movie.title} overview={movie.overview} />
     </main>

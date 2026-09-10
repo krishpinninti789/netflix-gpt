@@ -1,14 +1,20 @@
 "use client";
-import { addNowPlayingMovies } from "@/utils/redux/moviesSlice";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { RootState } from "@/utils/redux/appStore";
+import {
+  addNowPlayingMovies,
+  setMoviesLoading,
+} from "@/utils/redux/moviesSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const useNowPlayingMovies = () => {
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const loading = useSelector((store: RootState) => store.movies.moviesLoading);
 
   useEffect(() => {
     const fetchMovies = async () => {
+      dispatch(setMoviesLoading(true));
+
       try {
         const response = await fetch("/api/movies");
 
@@ -24,12 +30,12 @@ const useNowPlayingMovies = () => {
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       } finally {
-        setLoading(false);
+        dispatch(setMoviesLoading(false));
       }
     };
 
     fetchMovies();
-  }, []);
+  }, [dispatch]);
 
   return {
     loading,

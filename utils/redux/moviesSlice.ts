@@ -19,10 +19,16 @@ export type Movie = {
 
 type MoviesState = {
   nowPlayingMovies: Movie[];
+  trailer: string | null;
+  moviesLoading: boolean;
+  trailerLoading: boolean;
 };
 
 const initialState: MoviesState = {
   nowPlayingMovies: [],
+  trailer: null,
+  moviesLoading: false,
+  trailerLoading: false,
 };
 
 const moviesSlice = createSlice({
@@ -32,9 +38,23 @@ const moviesSlice = createSlice({
     addNowPlayingMovies: (state, action: PayloadAction<Movie[]>) => {
       state.nowPlayingMovies = action.payload;
     },
+    addTrailer: (state, action: PayloadAction<string | null>) => {
+      state.trailer = action.payload;
+    },
+    setMoviesLoading: (state, action: PayloadAction<boolean>) => {
+      state.moviesLoading = action.payload;
+    },
+    setTrailerLoading: (state, action: PayloadAction<boolean>) => {
+      state.trailerLoading = action.payload;
+    },
   },
 });
 
-export const { addNowPlayingMovies } = moviesSlice.actions;
+export const {
+  addNowPlayingMovies,
+  addTrailer,
+  setMoviesLoading,
+  setTrailerLoading,
+} = moviesSlice.actions;
 
 export default moviesSlice.reducer;

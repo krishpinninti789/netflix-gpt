@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { RootState } from "@/utils/redux/appStore";
+import { addTrailer, setTrailerLoading } from "@/utils/redux/moviesSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 type MovieVideo = {
   id: string;
@@ -12,15 +15,21 @@ type MovieVideo = {
 };
 
 const useMovieTrailer = (movieId?: number) => {
-  const [trailerKey, setTrailerKey] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const trailerKey = useSelector((store: RootState) => store.movies.trailer);
+  const loading = useSelector(
+    (store: RootState) => store.movies.trailerLoading,
+  );
 
   useEffect(() => {
-    if (!movieId) return;
+    if (!movieId) {
+      dispatch(addTrailer(null));
+      return;
+    }
 
     const fetchTrailer = async () => {
       try {
-        setLoading(true);
+        dispatch(setTrailerLoading(true));
 
         const response = await fetch(`/api/movies/${movieId}/videos`);
 
@@ -43,17 +52,17 @@ const useMovieTrailer = (movieId?: number) => {
             video.site === "YouTube" && video.type === "Trailer",
         );
 
-        setTrailerKey(trailer?.key ?? fallbackTrailer?.key ?? null);
+        dispatch(addTrailer(trailer?.key ?? fallbackTrailer?.key ?? null));
       } catch (error) {
         console.error("Failed to fetch trailer:", error);
-        setTrailerKey(null);
+        dispatch(addTrailer(null));
       } finally {
-        setLoading(false);
+        dispatch(setTrailerLoading(false));
       }
     };
 
     fetchTrailer();
-  }, [movieId]);
+  }, [dispatch, movieId]);
 
   return {
     trailerKey,
