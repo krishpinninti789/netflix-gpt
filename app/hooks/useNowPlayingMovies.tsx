@@ -1,9 +1,11 @@
 "use client";
+import { addNowPlayingMovies } from "@/utils/redux/moviesSlice";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const useNowPlayingMovies = () => {
-  const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -18,7 +20,7 @@ const useNowPlayingMovies = () => {
 
         const data = await response.json();
 
-        setMovies(data);
+        dispatch(addNowPlayingMovies(data));
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       } finally {
@@ -30,7 +32,6 @@ const useNowPlayingMovies = () => {
   }, []);
 
   return {
-    movies,
     loading,
   };
 };

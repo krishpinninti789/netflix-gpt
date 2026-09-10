@@ -5,6 +5,8 @@ import useMovieTrailer from "@/app/hooks/useMovieTrailer";
 
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackGround";
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/appStore";
 
 type Movie = {
   id: number;
@@ -13,7 +15,10 @@ type Movie = {
 };
 
 const MainContainer = () => {
-  const { movies, loading: moviesLoading } = useNowPlayingMovies();
+  const movies = useSelector(
+    (store: RootState) => store.movies.nowPlayingMovies,
+  );
+  const { loading: moviesLoading } = useNowPlayingMovies();
 
   const movie = movies?.[0] as Movie | undefined;
 
