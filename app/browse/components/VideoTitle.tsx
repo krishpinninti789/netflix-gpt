@@ -7,11 +7,11 @@ const VideoTitle = ({ title, overview }: VideoTitleProps) => {
   return (
     <div className="absolute left-0 top-0 flex h-full w-full items-center">
       <div className="ml-8 mt-20 max-w-xl md:ml-16">
-        <h1 className="text-4xl font-bold text-white drop-shadow-lg md:text-6xl">
+        <h1 className="text-3xl font-bold text-white drop-shadow-lg md:text-5xl">
           {title}
         </h1>
 
-        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-white/90 md:text-lg">
+        <p className="mt-4 line-clamp-3 text-xs leading-relaxed text-white/90 md:text-sm">
           {overview}
         </p>
 

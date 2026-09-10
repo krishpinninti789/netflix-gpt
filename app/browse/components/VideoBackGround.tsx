@@ -8,7 +8,7 @@ type VideoBackgroundProps = {
 
 const VideoBackground = ({ videoKey }: VideoBackgroundProps) => {
   return (
-    <div className="absolute inset-0 overflow-hidden mt-8">
+    <div className="absolute inset-0 overflow-hidden mt-8 rounded-xl border-2 border-gray-700">
       <iframe
         className="
           absolute

@@ -21,14 +21,14 @@ const MainContainer = () => {
 
   if (moviesLoading || !movie) {
     return (
-      <div className="flex h-[80vh] items-center justify-center bg-black text-white">
+      <div className="flex h-[80vh] items-center justify-cente text-white">
         Loading...
       </div>
     );
   }
 
   return (
-    <main className="relative h-[80vh] overflow-hidden bg-black">
+    <main className="relative h-[80vh] overflow-hidden">
       {trailerKey && !trailerLoading && (
         <VideoBackground videoKey={trailerKey} />
       )}
