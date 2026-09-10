@@ -30,7 +30,7 @@ const VideoTitle = ({ title, overview }: VideoTitleProps) => {
             ⓘ More Info
           </button>
         </div>
-        <div className="absolute bottom-0 left-0 h-40 w-full bg-linear-to-t from-black to-transparent" />
+        <div className="absolute bottom-0 left-0 h-40 w-full bg-linear-to-t from-black to-transparent rounded-xl" />
       </div>
     </div>
   );

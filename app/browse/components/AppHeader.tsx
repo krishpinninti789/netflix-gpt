@@ -18,15 +18,15 @@ const AppHeader = async () => {
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10">
-      <div className="flex h-20 items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]">
+      <div className="flex h-18 items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
           <Image
             width={100}
             height={100}
             alt="NetflixGPT"
-            className="h-12 w-auto object-contain"
+            className="h-10 w-auto object-contain"
             src={NETFLIX_LOGO_URL}
             loading="eager"
           />

@@ -1,41 +1,47 @@
 "use client";
 
+import { useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/appStore";
+
 import useNowPlayingMovies from "@/app/hooks/useNowPlayingMovies";
 import useMovieTrailer from "@/app/hooks/useMovieTrailer";
 
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackGround";
-import { useSelector } from "react-redux";
-import { RootState } from "@/utils/redux/appStore";
-
-type Movie = {
-  id: number;
-  title: string;
-  overview: string;
-};
+import SecondaryContainer from "./SecondaryContainer";
+import { Movie } from "@/utils/types/movie.ypes";
 
 const MainContainer = () => {
+  // Trigger fetching of movies.
+  useNowPlayingMovies();
+
   const { nowPlayingMovies, trailer, trailerLoading, moviesLoading } =
     useSelector((store: RootState) => store.movies);
-  useNowPlayingMovies();
 
   const movie = nowPlayingMovies?.[0] as Movie | undefined;
 
+  // Trigger fetching of trailer for the selected movie.
   useMovieTrailer(movie?.id);
 
   if (moviesLoading || !movie) {
     return (
-      <div className="flex h-[80vh] items-center justify-cente text-white">
+      <div className="flex h-screen items-center justify-center bg-black text-white">
         Loading...
       </div>
     );
   }
 
   return (
-    <main className="relative h-[80vh] overflow-hidden">
-      {trailer && !trailerLoading && <VideoBackground videoKey={trailer} />}
+    <main>
+      {/* Hero */}
+      <section className="relative h-[80vh] overflow-hidden">
+        {trailer && !trailerLoading && <VideoBackground videoKey={trailer} />}
 
-      <VideoTitle title={movie.title} overview={movie.overview} />
+        <VideoTitle title={movie.title} overview={movie.overview} />
+      </section>
+
+      {/* Movie rows */}
+      <SecondaryContainer />
     </main>
   );
 };
