@@ -10,15 +10,21 @@ import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackGround";
 import SecondaryContainer from "./SecondaryContainer";
 import { Movie } from "@/utils/types/movie.ypes";
+import usePopularMovies from "@/app/hooks/usePopularMovies";
+import useTopRatedMovies from "@/app/hooks/useTopRatedMovies";
+import useTrendingMovies from "@/app/hooks/useTrendingMovies";
 
 const MainContainer = () => {
   // Trigger fetching of movies.
   useNowPlayingMovies();
+  usePopularMovies();
+  useTopRatedMovies();
+  useTrendingMovies();
 
   const { nowPlayingMovies, trailer, trailerLoading, moviesLoading } =
     useSelector((store: RootState) => store.movies);
 
-  const movie = nowPlayingMovies?.[0] as Movie | undefined;
+  const movie = nowPlayingMovies?.[5] as Movie | undefined;
 
   // Trigger fetching of trailer for the selected movie.
   useMovieTrailer(movie?.id);

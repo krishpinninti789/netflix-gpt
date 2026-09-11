@@ -1,20 +1,18 @@
 "use client";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
 import {
-  addPopularMovies,
-  addTrendingMovies,
-  setPopularMoviesLoading,
-  setTrendingMoviesLoading,
+  addTopRatedMovies,
+  setTopRatedMoviesLoading,
 } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-const useTrendingMovies = () => {
+const useTopRatedMovies = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovies = async () => {
-      dispatch(setTrendingMoviesLoading(true));
+      dispatch(setTopRatedMoviesLoading(true));
 
       try {
         const response = await fetch(
@@ -29,16 +27,16 @@ const useTrendingMovies = () => {
         if (!response.ok) {
           const error = await response.json();
 
-          throw new Error(error.error || "Failed to fetch trending movies");
+          throw new Error(error.error || "Failed to fetch top-rated movies");
         }
 
         const data = await response.json();
 
-        dispatch(addTrendingMovies(data));
+        dispatch(addTopRatedMovies(data.results));
       } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
+        console.error("Failed to fetch top-rated movies:", error);
       } finally {
-        dispatch(setTrendingMoviesLoading(false));
+        dispatch(setTopRatedMoviesLoading(false));
       }
     };
 
@@ -46,4 +44,4 @@ const useTrendingMovies = () => {
   }, [dispatch]);
 };
 
-export default useTrendingMovies;
+export default useTopRatedMovies;

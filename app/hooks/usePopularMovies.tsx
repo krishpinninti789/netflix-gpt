@@ -1,12 +1,11 @@
 "use client";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
-import { RootState } from "@/utils/redux/appStore";
 import {
   addPopularMovies,
   setPopularMoviesLoading,
 } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const usePopularMovies = () => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const usePopularMovies = () => {
 
         const data = await response.json();
 
-        dispatch(addPopularMovies(data));
+        dispatch(addPopularMovies(data.results));
       } catch (error) {
         console.error("Failed to fetch popular movies:", error);
       } finally {

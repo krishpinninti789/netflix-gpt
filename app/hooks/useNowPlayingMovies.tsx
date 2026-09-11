@@ -1,12 +1,11 @@
 "use client";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
-import { RootState } from "@/utils/redux/appStore";
 import {
   addNowPlayingMovies,
   setMoviesLoading,
 } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const useNowPlayingMovies = () => {
   const dispatch = useDispatch();

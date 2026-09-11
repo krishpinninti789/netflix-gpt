@@ -1,7 +1,6 @@
 "use client";
 
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
-import { RootState } from "@/utils/redux/appStore";
 import { addTrailer, setTrailerLoading } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

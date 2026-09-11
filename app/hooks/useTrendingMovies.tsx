@@ -1,9 +1,7 @@
 "use client";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
 import {
-  addPopularMovies,
   addTrendingMovies,
-  setPopularMoviesLoading,
   setTrendingMoviesLoading,
 } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
@@ -34,7 +32,7 @@ const useTrendingMovies = () => {
 
         const data = await response.json();
 
-        dispatch(addTrendingMovies(data));
+        dispatch(addTrendingMovies(data.results));
       } catch (error) {
         console.error("Failed to fetch trending movies:", error);
       } finally {
