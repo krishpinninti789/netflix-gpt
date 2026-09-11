@@ -1,5 +1,6 @@
 "use client";
 
+import { MOVIES_API_BASE_URL } from "@/utils/constants";
 import { RootState } from "@/utils/redux/appStore";
 import { addTrailer, setTrailerLoading } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
@@ -16,10 +17,6 @@ type MovieVideo = {
 
 const useMovieTrailer = (movieId?: number) => {
   const dispatch = useDispatch();
-  const trailerKey = useSelector((store: RootState) => store.movies.trailer);
-  const loading = useSelector(
-    (store: RootState) => store.movies.trailerLoading,
-  );
 
   useEffect(() => {
     if (!movieId) {
@@ -31,7 +28,15 @@ const useMovieTrailer = (movieId?: number) => {
       try {
         dispatch(setTrailerLoading(true));
 
-        const response = await fetch(`/api/movies/${movieId}/videos`);
+        const response = await fetch(
+          `${MOVIES_API_BASE_URL}/3/movie/${movieId}/videos?language=en-US`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
+              Accept: "application/json",
+            },
+          },
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch movie videos");
@@ -63,11 +68,6 @@ const useMovieTrailer = (movieId?: number) => {
 
     fetchTrailer();
   }, [dispatch, movieId]);
-
-  return {
-    trailerKey,
-    loading,
-  };
 };
 
 export default useMovieTrailer;

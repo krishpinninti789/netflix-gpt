@@ -1,23 +1,24 @@
 "use client";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
-import { RootState } from "@/utils/redux/appStore";
 import {
-  addNowPlayingMovies,
-  setMoviesLoading,
+  addPopularMovies,
+  addTrendingMovies,
+  setPopularMoviesLoading,
+  setTrendingMoviesLoading,
 } from "@/utils/redux/moviesSlice";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-const useNowPlayingMovies = () => {
+const useTrendingMovies = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovies = async () => {
-      dispatch(setMoviesLoading(true));
+      dispatch(setTrendingMoviesLoading(true));
 
       try {
         const response = await fetch(
-          `${MOVIES_API_BASE_URL}/3/movie/now_playing?language=en-US&page=1`,
+          `${MOVIES_API_BASE_URL}/3/movie/top_rated?language=en-US&page=1`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
@@ -28,16 +29,16 @@ const useNowPlayingMovies = () => {
         if (!response.ok) {
           const error = await response.json();
 
-          throw new Error(error.error || "Failed to fetch movies");
+          throw new Error(error.error || "Failed to fetch trending movies");
         }
 
         const data = await response.json();
 
-        dispatch(addNowPlayingMovies(data.results));
+        dispatch(addTrendingMovies(data));
       } catch (error) {
-        console.error("Failed to fetch movies:", error);
+        console.error("Failed to fetch trending movies:", error);
       } finally {
-        dispatch(setMoviesLoading(false));
+        dispatch(setTrendingMoviesLoading(false));
       }
     };
 
@@ -45,4 +46,4 @@ const useNowPlayingMovies = () => {
   }, [dispatch]);
 };
 
-export default useNowPlayingMovies;
+export default useTrendingMovies;

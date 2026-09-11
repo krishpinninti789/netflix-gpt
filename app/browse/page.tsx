@@ -1,6 +1,6 @@
 import React from "react";
 import AppHeader from "./components/AppHeader";
-import MovieList from "./components/MovieCardsContainer";
+import MovieList from "./components/MoviesList";
 import MainContainer from "./components/MainContainer";
 
 const page = () => {
