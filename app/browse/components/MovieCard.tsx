@@ -13,7 +13,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   }
 
   return (
-    <div className="group relative h-75 w-50 shrink-0 overflow-hidden rounded-md">
+    <div className="group relative h-75 w-50 shrink-0 overflow-hidden rounded-md cursor-pointer">
       <Image
         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
         alt={movie.title}

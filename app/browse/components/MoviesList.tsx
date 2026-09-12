@@ -10,12 +10,10 @@ type MoviesListProps = {
 
 const MoviesList = ({ title, movies }: MoviesListProps) => {
   return (
-    <section className="mb-8">
-      <h2 className="mb-6 px-4 text-xl font-semibold text-white md:px-8">
-        {title}
-      </h2>
+    <section className="flex gap-y-6 flex-col">
+      <h2 className="text-xl font-semibold text-white ">{title}</h2>
 
-      <div className="flex gap-4 overflow-x-auto px-4 pb-4 md:px-8 scrollbar-none [&::-webkit-scrollbar]:hidden">
+      <div className="flex gap-4 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

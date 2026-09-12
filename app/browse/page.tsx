@@ -5,7 +5,7 @@ import MainContainer from "./components/MainContainer";
 
 const page = () => {
   return (
-    <div className="py-6 px-10">
+    <div className="py-4 px-8 md:py-6 md:px-10">
       <AppHeader />
       <MainContainer />
     </div>

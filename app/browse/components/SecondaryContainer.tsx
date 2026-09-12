@@ -19,7 +19,7 @@ const SecondaryContainer = () => {
   );
 
   return (
-    <section className="mt-8">
+    <section className="flex flex-col gap-y-6">
       <MoviesList title="Top Rated" movies={topRatedMovies} />
       <MoviesList title="Now Playing" movies={nowPlayingMovies} />
       <MoviesList title="Trending" movies={trendingMovies} />

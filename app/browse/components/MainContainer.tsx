@@ -38,9 +38,9 @@ const MainContainer = () => {
   }
 
   return (
-    <main>
+    <main className="flex flex-col gap-y-8">
       {/* Hero */}
-      <section className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[60vh] md:h-[80vh] overflow-hidden">
         {trailer && !trailerLoading && <VideoBackground videoKey={trailer} />}
 
         <VideoTitle title={movie.title} overview={movie.overview} />
