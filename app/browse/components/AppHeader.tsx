@@ -2,6 +2,7 @@ import Image from "next/image";
 import { NETFLIX_LOGO_URL } from "@/utils/constants";
 import { logoutAction } from "@/app/actions/auth.action";
 import { getCurrentUser } from "@/app/actions/user.action";
+import GPTButton from "./GPTButton";
 
 const AppHeader = async () => {
   const user = await getCurrentUser();
@@ -34,19 +35,7 @@ const AppHeader = async () => {
         {/* User section */}
         {user && (
           <div className="flex items-center gap-4">
-            <button className="rounded-md hidden md:block py-2 px-6 text-sm bg-linear-to-br from-red-500 to-red-700 cursor-pointer">
-              GPT Search
-            </button>
-            <button className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-red-500 to-red-700 text-sm font-bold text-white shadow-lg shadow-red-950/30 md:hidden">
-              <Image
-                src="/robot.png"
-                alt="GPT"
-                width={100}
-                height={100}
-                loading="eager"
-                className=" rounded-full object-contain invert-100 h-8 w-8"
-              />
-            </button>
+            <GPTButton />
             {/* User information */}
             <div className="hidden text-right sm:block">
               <p className="text-sm font-semibold text-white">{displayName}</p>
