@@ -7,6 +7,7 @@ const page = () => {
   return (
     <div className="py-4 px-8 md:py-6 md:px-10">
       <AppHeader />
+
       <MainContainer />
     </div>
   );
