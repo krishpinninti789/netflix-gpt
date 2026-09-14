@@ -40,7 +40,7 @@ const GPTSearchBar = () => {
   return (
     <form
       onSubmit={handleSearchMovie}
-      className="mx-auto flex w-full max-w-2xl items-center gap-2 px-4"
+      className="mx-auto flex w-full max-w-2xl items-center gap-2"
     >
       <input
         type="text"
