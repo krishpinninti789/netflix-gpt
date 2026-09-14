@@ -1,28 +1,40 @@
 "use client";
 
 import { getGPTMovieSuggestions } from "@/app/actions/gpt.action";
+import { MOVIES_API_BASE_URL } from "@/utils/constants";
 import React, { useState } from "react";
 
 const GPTSearchBar = () => {
   const [searchText, setSearchText] = useState("");
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  const searchTMDB = async (movie: string) => {
+    const data = await fetch(
+      `${MOVIES_API_BASE_URL}/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
+        },
+      },
+    );
+    const json = await data.json();
+    return json.results;
+  };
+
+  const handleSearchMovie = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!searchText.trim()) return;
 
     const movies = await getGPTMovieSuggestions(searchText);
 
-    console.log(movies);
-
-    // const movieResults = await Promise.all(
-    //   movies.map((movie: string) => searchTMDB(movie)),
-    // );
+    const movieResults = await Promise.all(
+      movies.map((movie: string) => searchTMDB(movie)),
+    );
   };
 
   return (
     <form
-      onSubmit={handleSearch}
+      onSubmit={handleSearchMovie}
       className="mx-auto flex w-full max-w-2xl items-center gap-2 px-4"
     >
       <input
@@ -35,7 +47,7 @@ const GPTSearchBar = () => {
 
       <button
         type="submit"
-        className="h-12 rounded-md bg-red-600 px-6 font-semibold text-white transition hover:bg-red-700"
+        className="h-12 rounded-md bg-red-600 px-6 font-semibold text-white transition hover:bg-red-700 cursor-pointer"
       >
         Search
       </button>
