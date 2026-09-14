@@ -12,13 +12,13 @@ const GPTButton = () => {
   return (
     <div>
       <button
-        className="rounded-md hidden md:block py-2 px-6 text-sm bg-linear-to-br from-red-500 to-red-700 cursor-pointer"
+        className="rounded-md hidden md:block py-2 px-6 text-sm bg-red-600 cursor-pointer"
         onClick={handleToggleGPTView}
       >
         GPT Search
       </button>
       <button
-        className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-linear-to-br from-red-500 to-red-700 text-sm font-bold text-white shadow-lg shadow-red-950/30 md:hidden"
+        className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-red-600 text-sm font-bold text-white shadow-lg shadow-red-950/30 md:hidden"
         onClick={handleToggleGPTView}
       >
         <Image

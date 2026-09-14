@@ -1,14 +1,11 @@
-import React from "react";
 import AppHeader from "./components/AppHeader";
-import MovieList from "./components/MoviesList";
-import MainContainer from "./components/MainContainer";
+import BrowseContainer from "./components/BrowseContainer";
 
 const page = () => {
   return (
-    <div className="py-4 px-8 md:py-6 md:px-10">
+    <div className="flex flex-col gap-y-4 py-4 px-8 md:py-6 md:px-10">
       <AppHeader />
-
-      <MainContainer />
+      <BrowseContainer />
     </div>
   );
 };
