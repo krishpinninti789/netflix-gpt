@@ -2,10 +2,13 @@
 
 import { getGPTMovieSuggestions } from "@/app/actions/gpt.action";
 import { MOVIES_API_BASE_URL } from "@/utils/constants";
+import { addGptMovieNames, addGptMoviesList } from "@/utils/redux/gptSlice";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const GPTSearchBar = () => {
   const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
 
   const searchTMDB = async (movie: string) => {
     const data = await fetch(
@@ -26,10 +29,12 @@ const GPTSearchBar = () => {
     if (!searchText.trim()) return;
 
     const movies = await getGPTMovieSuggestions(searchText);
+    dispatch(addGptMovieNames(movies));
 
     const movieResults = await Promise.all(
       movies.map((movie: string) => searchTMDB(movie)),
     );
+    dispatch(addGptMoviesList(movieResults));
   };
 
   return (
